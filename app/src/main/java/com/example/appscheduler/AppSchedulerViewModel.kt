@@ -14,7 +14,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AppSchedulerViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val appScheduleRepository: AppScheduleRepository
+    private val appScheduleRepository: AppScheduleRepository,
+    private val alarmScheduler: AlarmScheduler
 ) : ViewModel() {
 
     val allSchedules: LiveData<List<AppSchedule>> = appScheduleRepository.getAllSchedules()
@@ -30,7 +31,24 @@ class AppSchedulerViewModel @Inject constructor(
             val schedule = AppSchedule(packageName = packageName, appName = appName, scheduledTime = time)
             val insertedId = appScheduleRepository.insertSchedule(schedule)
             val updatedSchedule = schedule.copy(id = insertedId.toInt())
-           // AlarmScheduler.setAlarm(context, updatedSchedule)
+            alarmScheduler.setAlarm(updatedSchedule)
+        }
+    }
+
+    fun cancelSchedule(id: Int) {
+        viewModelScope.launch {
+            appScheduleRepository.cancelSchedule(id)
+            alarmScheduler.cancelAlarm(id)
+        }
+    }
+
+    fun rescheduleApp(id: Int, newTime: Long) {
+        viewModelScope.launch {
+            val schedule = appScheduleRepository.getScheduleById(id)?.copy(scheduledTime = newTime)
+            if (schedule != null) {
+                appScheduleRepository.updateSchedule(schedule)
+                alarmScheduler.setAlarm(schedule)
+            }
         }
     }
 

@@ -21,8 +21,8 @@ class InstalledAppAdapter(
             val appName = appInfo.loadLabel(packageManager).toString()
             val appIcon = appInfo.loadIcon(packageManager)
 
-            binding.tvAppName.text = appName
-            binding.ivAppIcon.setImageDrawable(appIcon)
+            binding.textViewAppName.text = appName
+            binding.imageViewAppIcon.setImageDrawable(appIcon)
 
             binding.root.setOnClickListener {
                 onAppClick(appInfo)

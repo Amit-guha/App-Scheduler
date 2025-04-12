@@ -1,9 +1,9 @@
 package com.example.appscheduler
 
-import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@ViewModelScoped
+@Singleton
 class AppScheduleRepository @Inject constructor(
     private val appScheduleDao: AppScheduleDao
 ) {

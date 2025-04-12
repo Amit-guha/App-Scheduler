@@ -9,6 +9,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +24,7 @@ import java.util.Calendar
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var scheduleAdapter: ScheduleListAdapter
     private val viewModel: AppSchedulerViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,17 +58,68 @@ class MainActivity : AppCompatActivity() {
         }*/
 
         initUi()
+        initListeners()
         observeLiveData()
+    }
+
+    private fun initListeners() {
+        binding.fabAdd.setOnClickListener {
+            binding.appListContainer.visibility = View.VISIBLE
+            binding.btnCancel.visibility = View.VISIBLE
+            binding.fabAdd.visibility = View.GONE
+            binding.scheduleRecyclerView.visibility = View.GONE
+        }
+
+        binding.btnCancel.setOnClickListener {
+            binding.appListContainer.visibility = View.GONE
+            binding.scheduleRecyclerView.visibility = View.VISIBLE
+            binding.btnCancel.visibility = View.GONE
+            binding.fabAdd.visibility = View.VISIBLE
+        }
     }
 
     private fun observeLiveData() {
         viewModel.allSchedules.observe(this) { schedules ->
-            Toast.makeText(this, "Schedules updated: $schedules", Toast.LENGTH_SHORT).show()
+            scheduleAdapter.submitList(schedules)
         }
     }
 
     private fun initUi() {
         setInstallListAdapter()
+        setScheduleListAdapter()
+    }
+
+    private fun setScheduleListAdapter() {
+        scheduleAdapter = ScheduleListAdapter(
+            packageManager,
+            object : ScheduleListAdapter.OnScheduleActionListener {
+                override fun onEditSchedule(schedule: AppSchedule) {
+                    showHourPicker(context = this@MainActivity) {
+                        viewModel.rescheduleApp(
+                            id = schedule.id,
+                            newTime = it
+                        )
+                    }
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Edit schedule: $schedule",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                override fun onCancelSchedule(schedule: AppSchedule) {
+                    viewModel.cancelSchedule(id = schedule.id)
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Cancel schedule: $schedule",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+            })
+
+        binding.scheduleRecyclerView.adapter = scheduleAdapter
+        binding.scheduleRecyclerView.layoutManager = LinearLayoutManager(this)
     }
 
     private fun setInstallListAdapter() {

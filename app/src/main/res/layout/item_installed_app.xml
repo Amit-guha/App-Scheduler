@@ -1,30 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:elevation="2dp">
+    android:elevation="2dp"
+    app:cardCornerRadius="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="12dp"
-        android:gravity="center_vertical">
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
-            android:id="@+id/ivAppIcon"
+            android:id="@+id/imageViewAppIcon"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:contentDescription="App icon"
-            android:layout_marginEnd="16dp"/>
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/app_icon" />
 
         <TextView
-            android:id="@+id/tvAppName"
+            android:id="@+id/textViewAppName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="App Name"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/installed_app_name"
             android:textSize="16sp"
             android:textStyle="bold" />
     </LinearLayout>
