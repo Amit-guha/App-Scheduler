@@ -31,7 +31,7 @@ class ScheduleListAdapter(
     inner class ScheduleViewHolder(private val binding: ItemScheduleBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        private val dateFormat = SimpleDateFormat("MMM d, yyyy h:mm a", Locale.getDefault())
+        private val dateFormat = SimpleDateFormat("h:mm a", Locale.getDefault())
 
         fun bind(schedule: AppSchedule) {
             try {
@@ -39,20 +39,20 @@ class ScheduleListAdapter(
                 val appName = appInfo.loadLabel(packageManager).toString()
                 val appIcon = appInfo.loadIcon(packageManager)
 
-                binding.appName.text = appName
+                binding.textViewAppName.text = appName
                 binding.appIcon.setImageDrawable(appIcon)
             } catch (e: Exception) {
-                binding.appName.text = schedule.packageName
+                binding.textViewAppName.text = schedule.packageName
             }
 
-            binding.scheduleTime.text = dateFormat.format(schedule.scheduledTime)
+            binding.textViewScheduleTime.text = dateFormat.format(schedule.scheduledTime)
             binding.status.text = if (schedule.isExecuted) "Executed" else "Pending"
 
-            binding.editButton.setOnClickListener {
+            binding.btnEdit.setOnClickListener {
                 listener.onEditSchedule(schedule)
             }
 
-            binding.cancelButton.setOnClickListener {
+            binding.btnCancel.setOnClickListener {
                 listener.onCancelSchedule(schedule)
             }
         }

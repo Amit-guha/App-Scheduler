@@ -4,4 +4,13 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
+
+    <style name="TextViewTextColorStyle">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="ButtonTextColorStyleTextColorStyle">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
 </resources>

@@ -5,4 +5,11 @@
     <string name="cancel">Cancel</string>
     <string name="app_icon">App icon</string>
     <string name="installed_app_name">App Name</string>
+    <string name="edit">Edit</string>
+    <string name="this_app_needs_exact_alarm_permission_to_work_properly_please_grant_the_permission">This app needs exact alarm permission to work properly. Please grant the permission.</string>
+    <string name="exact_alarm_permission_needed">Exact Alarm Permission Needed</string>
+    <string name="allow">Allow</string>
+    <string name="deny">Deny</string>
+    <string name="no_apps_scheduled_yet_tap_the_icon_to_add_a_schedule">No apps scheduled yet. Tap the + icon to add a schedule</string>
+    <string name="choose_hour">Choose hour:</string>
 </resources>

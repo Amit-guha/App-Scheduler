@@ -6,4 +6,11 @@
     </style>
 
     <style name="Theme.AppScheduler" parent="Base.Theme.AppScheduler" />
+    <style name="TextViewTextColorStyle">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="ButtonTextColorStyle">
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>

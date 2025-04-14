@@ -1,64 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp"
-    android:background="?attr/selectableItemBackground">
+    android:layout_margin="8dp"
+    android:elevation="2dp"
+    app:cardCornerRadius="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="8dp">
 
         <ImageView
             android:id="@+id/appIcon"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:contentDescription="App icon" />
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/app_icon" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginStart="16dp"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/appName"
-                android:text="@string/app_name"
+                android:id="@+id/textViewAppName"
+                style="@style/TextViewTextColorStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="@string/app_name" />
 
             <TextView
-                android:id="@+id/scheduleTime"
+                android:id="@+id/textViewScheduleTime"
+                style="@style/TextViewTextColorStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
-                android:text="scheduleTime"
-                android:textColor="?android:attr/textColorSecondary" />
+                tools:text="ScheduleTime" />
 
             <TextView
                 android:id="@+id/status"
+                style="@style/TextViewTextColorStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="status"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="Execution Status" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/editButton"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Edit" />
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="4dp"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/cancelButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="Cancel" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEdit"
+                style="@style/ButtonTextColorStyleTextColorStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/edit" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCancel"
+                style="@style/ButtonTextColorStyleTextColorStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/cancel" />
+        </LinearLayout>
+
+
     </LinearLayout>
-</LinearLayout>
+</androidx.cardview.widget.CardView>

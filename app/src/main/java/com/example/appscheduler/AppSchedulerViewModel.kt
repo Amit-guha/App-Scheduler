@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,6 +19,10 @@ class AppSchedulerViewModel @Inject constructor(
     private val alarmScheduler: AlarmScheduler
 ) : ViewModel() {
 
+    private val _isInInstalledAppsView = MutableLiveData<Boolean>(false)
+    val isInInstalledAppsView: LiveData<Boolean> = _isInInstalledAppsView
+
+
     val allSchedules: LiveData<List<AppSchedule>> = appScheduleRepository.getAllSchedules()
 
     fun getInstalledApps(): List<ApplicationInfo> {
@@ -28,7 +33,8 @@ class AppSchedulerViewModel @Inject constructor(
 
     fun scheduleApp(packageName: String, appName: String, time: Long) {
         viewModelScope.launch {
-            val schedule = AppSchedule(packageName = packageName, appName = appName, scheduledTime = time)
+            val schedule =
+                AppSchedule(packageName = packageName, appName = appName, scheduledTime = time)
             val insertedId = appScheduleRepository.insertSchedule(schedule)
             val updatedSchedule = schedule.copy(id = insertedId.toInt())
             alarmScheduler.setAlarm(updatedSchedule)
@@ -44,7 +50,8 @@ class AppSchedulerViewModel @Inject constructor(
 
     fun rescheduleApp(id: Int, newTime: Long) {
         viewModelScope.launch {
-            val schedule = appScheduleRepository.getScheduleById(id)?.copy(scheduledTime = newTime)
+            val schedule = appScheduleRepository.getScheduleById(id)
+                ?.copy(scheduledTime = newTime, isExecuted = false)
             if (schedule != null) {
                 appScheduleRepository.updateSchedule(schedule)
                 alarmScheduler.setAlarm(schedule)
@@ -52,6 +59,9 @@ class AppSchedulerViewModel @Inject constructor(
         }
     }
 
+    fun setInstalledAppsView(isVisible: Boolean) {
+        _isInInstalledAppsView.value = isVisible
+    }
 
 
 }
