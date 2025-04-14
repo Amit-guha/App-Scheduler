@@ -8,19 +8,19 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.appscheduler.utils.AlarmPermissionUtils
-import com.example.appscheduler.utils.CustomDialog
-import com.example.appscheduler.view.adapter.InstalledAppAdapter
-import com.example.appscheduler.view.adapter.ScheduleListAdapter
 import com.example.appscheduler.databinding.ActivityMainBinding
 import com.example.appscheduler.model.AppSchedule
+import com.example.appscheduler.utils.AlarmPermissionUtils
+import com.example.appscheduler.utils.CustomDialog
+import com.example.appscheduler.utils.showToast
+import com.example.appscheduler.view.adapter.InstalledAppAdapter
+import com.example.appscheduler.view.adapter.ScheduleListAdapter
 import com.example.appscheduler.viewmodel.AppSchedulerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
@@ -103,11 +103,7 @@ class MainActivity : AppCompatActivity() {
                 requestExactAlarmPermission()
             },
             onPermissionDenied = {
-                Toast.makeText(
-                    this,
-                    "Permission denied! Enable it later in Settings > Alarms & reminders",
-                    Toast.LENGTH_LONG
-                ).show()
+                showToast(getString(com.example.appscheduler.R.string.permission_denied_enable_it_later_in_settings_alarms_reminders))
             }
         )
     }
@@ -148,11 +144,7 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onCancelSchedule(schedule: AppSchedule) {
                     viewModel.cancelSchedule(id = schedule.id)
-                    Toast.makeText(
-                        this@MainActivity,
-                        "Schedule canceled successfully.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    showToast(getString(com.example.appscheduler.R.string.schedule_canceled_successfully))
                 }
 
             })
@@ -194,11 +186,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleExactAlarmPermissionResult() {
         if (!AlarmPermissionUtils.canScheduleExactAlarms(this)) {
-            Toast.makeText(
-                this,
-                "Permission denied! Enable it later in Settings > Alarms & reminders",
-                Toast.LENGTH_LONG
-            ).show()
+            showToast(message = getString(com.example.appscheduler.R.string.permission_denied_enable_it_later_in_settings_alarms_reminders))
         }
     }
 }
@@ -222,6 +210,8 @@ fun showHourPicker(
     val onTimeSelectedListener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
         calender.set(Calendar.HOUR_OF_DAY, hourOfDay)
         calender.set(Calendar.MINUTE, minute)
+        calender.set(Calendar.SECOND, 0)
+        calender.set(Calendar.MILLISECOND, 0)
 
         var selectedTime = calender.timeInMillis
         if (selectedTime < System.currentTimeMillis()) {

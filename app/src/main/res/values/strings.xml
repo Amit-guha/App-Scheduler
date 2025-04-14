@@ -12,4 +12,6 @@
     <string name="deny">Deny</string>
     <string name="no_apps_scheduled_yet_tap_the_icon_to_add_a_schedule">No apps scheduled yet. Tap the + icon to add a schedule</string>
     <string name="choose_hour">Choose hour:</string>
+    <string name="permission_denied_enable_it_later_in_settings_alarms_reminders"><![CDATA[Permission denied! Enable it later in Settings > Alarms & reminders]]></string>
+    <string name="schedule_canceled_successfully">Schedule canceled successfully.</string>
 </resources>
