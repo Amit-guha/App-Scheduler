@@ -52,15 +52,6 @@ class AlarmScheduler @Inject constructor(
             Log.e("AlarmScheduler", "Permission denied to schedule exact alarm", e)
         }
 
-
-        /* val intent = Intent(context, LaunchAppReceiver::class.java).apply {
-             putExtra("packageName", schedule.packageName)
-             putExtra("id", schedule.id)
-         }
-         val pendingIntent = PendingIntent.getBroadcast(
-             context, schedule.id, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-         )
-         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, schedule.scheduledTime, pendingIntent)*/
     }
 
 
@@ -79,13 +70,5 @@ class AlarmScheduler @Inject constructor(
 
         alarmManager?.cancel(pendingIntent)
     }
-
-  /*  fun cancelAlarm(id: Int) {
-        val intent = Intent(context, LaunchAppReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(
-            context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-        alarmManager?.cancel(pendingIntent)
-    }*/
 
 }
