@@ -1,8 +1,5 @@
 package com.example.appscheduler.view
 
-import android.R
-import android.app.TimePickerDialog
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -18,18 +15,19 @@ import com.example.appscheduler.databinding.ActivityMainBinding
 import com.example.appscheduler.model.AppSchedule
 import com.example.appscheduler.utils.AlarmPermissionUtils
 import com.example.appscheduler.utils.CustomDialog
+import com.example.appscheduler.utils.TimePickerUtils
 import com.example.appscheduler.utils.showToast
 import com.example.appscheduler.view.adapter.InstalledAppAdapter
 import com.example.appscheduler.view.adapter.ScheduleListAdapter
 import com.example.appscheduler.viewmodel.AppSchedulerViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Calendar
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var scheduleAdapter: ScheduleListAdapter
     private val customDialog by lazy { CustomDialog(this) }
+    private val timePickerUtils by lazy { TimePickerUtils(this) }
     private lateinit var alarmPermissionLauncher: ActivityResultLauncher<Intent>
     private val viewModel: AppSchedulerViewModel by viewModels()
 
@@ -134,7 +132,7 @@ class MainActivity : AppCompatActivity() {
             packageManager,
             object : ScheduleListAdapter.OnScheduleActionListener {
                 override fun onEditSchedule(schedule: AppSchedule) {
-                    showHourPicker(context = this@MainActivity) {
+                    timePickerUtils.showHourPicker {
                         viewModel.rescheduleApp(
                             id = schedule.id,
                             newTime = it
@@ -155,7 +153,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setInstallListAdapter() {
         val adapter = InstalledAppAdapter(viewModel.getInstalledApps(), packageManager) { appInfo ->
-            showHourPicker(context = this) {
+            timePickerUtils.showHourPicker {
                 viewModel.scheduleApp(
                     packageName = appInfo.packageName,
                     appName = appInfo.loadLabel(packageManager).toString(),
@@ -164,8 +162,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.appRecyclerView.adapter = adapter
-        binding.appRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.appRecyclerView.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            this.adapter = adapter
+        }
     }
 
     private fun requestExactAlarmPermission() {
@@ -191,49 +191,6 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-
-fun showHourPicker(
-    context: Context,
-    existingSchedule: AppSchedule? = null,
-    onTimeSelected: (Long) -> Unit
-) {
-
-    val calender = Calendar.getInstance()
-    existingSchedule?.let {
-        calender.timeInMillis = it.scheduledTime
-    } ?: run {
-        calender.timeInMillis = System.currentTimeMillis()
-    }
-
-    val hour = calender.get(Calendar.HOUR_OF_DAY)
-    val minute = calender.get(Calendar.MINUTE)
-    val onTimeSelectedListener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-        calender.set(Calendar.HOUR_OF_DAY, hourOfDay)
-        calender.set(Calendar.MINUTE, minute)
-        calender.set(Calendar.SECOND, 0)
-        calender.set(Calendar.MILLISECOND, 0)
-
-        var selectedTime = calender.timeInMillis
-        if (selectedTime < System.currentTimeMillis()) {
-            calender.add(Calendar.DAY_OF_YEAR, 1)
-            selectedTime = calender.timeInMillis
-        }
-        onTimeSelected(selectedTime)
-    }
-
-    val timePickerDialog = TimePickerDialog(
-        context,
-        R.style.Theme_Holo_Light_Dialog_NoActionBar,
-        onTimeSelectedListener,
-        hour,
-        minute,
-        true
-    )
-
-    timePickerDialog.setTitle(context.getString(com.example.appscheduler.R.string.choose_hour))
-    timePickerDialog.window?.setBackgroundDrawableResource(R.color.transparent)
-    timePickerDialog.show()
-}
 
 
 
