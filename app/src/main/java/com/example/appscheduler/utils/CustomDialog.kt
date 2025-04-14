@@ -1,7 +1,8 @@
-package com.example.appscheduler
+package com.example.appscheduler.utils
 
 import android.app.AlertDialog
 import android.content.Context
+import com.example.appscheduler.R
 
 class CustomDialog(
     private val context: Context,

@@ -1,4 +1,4 @@
-package com.example.appscheduler
+package com.example.appscheduler.view.adapter
 
 import android.content.pm.PackageManager
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appscheduler.databinding.ItemScheduleBinding
+import com.example.appscheduler.model.AppSchedule
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -62,14 +63,14 @@ class ScheduleListAdapter(
         fun onEditSchedule(schedule: AppSchedule)
         fun onCancelSchedule(schedule: AppSchedule)
     }
-}
 
-private class ScheduleDiffCallback : DiffUtil.ItemCallback<AppSchedule>() {
-    override fun areItemsTheSame(oldItem: AppSchedule, newItem: AppSchedule): Boolean {
-        return oldItem.id == newItem.id
-    }
+    private class ScheduleDiffCallback : DiffUtil.ItemCallback<AppSchedule>() {
+        override fun areItemsTheSame(oldItem: AppSchedule, newItem: AppSchedule): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-    override fun areContentsTheSame(oldItem: AppSchedule, newItem: AppSchedule): Boolean {
-        return oldItem == newItem
+        override fun areContentsTheSame(oldItem: AppSchedule, newItem: AppSchedule): Boolean {
+            return oldItem == newItem
+        }
     }
 }

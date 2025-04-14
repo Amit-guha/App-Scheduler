@@ -1,7 +1,9 @@
-package com.example.appscheduler
+package com.example.appscheduler.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.appscheduler.model.AppScheduleDatabase
+import com.example.appscheduler.model.AppScheduleDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

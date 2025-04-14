@@ -1,5 +1,7 @@
-package com.example.appscheduler
+package com.example.appscheduler.repository
 
+import com.example.appscheduler.model.AppSchedule
+import com.example.appscheduler.model.AppScheduleDao
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -1,4 +1,4 @@
-package com.example.appscheduler
+package com.example.appscheduler.application
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

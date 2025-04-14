@@ -1,5 +1,6 @@
-package com.example.appscheduler
+package com.example.appscheduler.view
 
+import android.R
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
@@ -14,7 +15,13 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.appscheduler.utils.AlarmPermissionUtils
+import com.example.appscheduler.utils.CustomDialog
+import com.example.appscheduler.view.adapter.InstalledAppAdapter
+import com.example.appscheduler.view.adapter.ScheduleListAdapter
 import com.example.appscheduler.databinding.ActivityMainBinding
+import com.example.appscheduler.model.AppSchedule
+import com.example.appscheduler.viewmodel.AppSchedulerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
 
@@ -226,15 +233,15 @@ fun showHourPicker(
 
     val timePickerDialog = TimePickerDialog(
         context,
-        android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
+        R.style.Theme_Holo_Light_Dialog_NoActionBar,
         onTimeSelectedListener,
         hour,
         minute,
         true
     )
 
-    timePickerDialog.setTitle(context.getString(R.string.choose_hour))
-    timePickerDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+    timePickerDialog.setTitle(context.getString(com.example.appscheduler.R.string.choose_hour))
+    timePickerDialog.window?.setBackgroundDrawableResource(R.color.transparent)
     timePickerDialog.show()
 }
 

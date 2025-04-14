@@ -1,4 +1,4 @@
-package com.example.appscheduler
+package com.example.appscheduler.model
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -10,7 +10,7 @@ import androidx.room.Update
 
 @Dao
 interface AppScheduleDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     suspend fun insert(schedule: AppSchedule): Long
 
     @Update

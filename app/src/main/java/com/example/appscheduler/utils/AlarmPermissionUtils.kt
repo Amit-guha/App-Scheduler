@@ -1,4 +1,4 @@
-package com.example.appscheduler
+package com.example.appscheduler.utils
 
 import android.app.AlarmManager
 import android.content.Context

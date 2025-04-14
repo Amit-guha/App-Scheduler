@@ -1,4 +1,4 @@
-package com.example.appscheduler
+package com.example.appscheduler.view.adapter
 
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appscheduler.databinding.ItemInstalledAppBinding
-
 
 class InstalledAppAdapter(
     private val appList: List<ApplicationInfo>,

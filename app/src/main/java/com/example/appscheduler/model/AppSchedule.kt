@@ -1,8 +1,7 @@
-package com.example.appscheduler
+package com.example.appscheduler.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-
 
 @Entity(tableName = "scheduled_apps")
 data class AppSchedule(

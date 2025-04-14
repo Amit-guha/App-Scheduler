@@ -1,4 +1,4 @@
-package com.example.appscheduler
+package com.example.appscheduler.viewmodel
 
 import android.content.Context
 import android.content.pm.ApplicationInfo
@@ -7,6 +7,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.appscheduler.utils.AlarmScheduler
+import com.example.appscheduler.model.AppSchedule
+import com.example.appscheduler.repository.AppScheduleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
